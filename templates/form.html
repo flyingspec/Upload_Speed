@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title_block %}
+    File Upload
+{% endblock title_block %}
+
+{% block main_block %}
+
+    <h2 class="text-center">Upload Your File</h2>
+
+    {% if error %}
+
+        <p style="color: red;">{{error}}</p>
+        
+    {% endif %}
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} mb-3">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+
+    {% if filename %}
+
+    <p style="color: blue; font-weight: bold; font-size: 20px;">Your file: {{filename}} has been uploaded</p>
+
+    <a href="{{ url_for('form') }}">
+        <button style="height: 10vh;background-color: red;color: yellow; border-radius: 20px;box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5); border: none; cursor: pointer;">
+            Submit More Files
+        </button>
+    </a>
+        
+    {% else %}
+
+    <form action="/form" method="post" enctype="multipart/form-data">
+
+        <label>Select Files</label>
+        <input type="file" name="file" />
+        <input type="submit" name = "upload" value="Upload">
+
+    </form>
+    
+    {% endif %}
+    
+
+{% endblock main_block %}
